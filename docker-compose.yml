@@ -1,0 +1,24 @@
+version:  '3.2'
+
+services:
+  db:
+    image: "postgres"
+    networks:
+      - spring
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: cars
+    volumes:
+      - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  app:
+    image: "spring-jdbc-template:0.0.1-SNAPSHOT"
+    networks:
+      - spring
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cars
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+    ports:
+      - 8080:8080
+networks:
+  spring:
