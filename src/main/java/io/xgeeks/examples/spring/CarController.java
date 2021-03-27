@@ -30,7 +30,7 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarDTO> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
+    public List<CarDTO> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "size", defaultValue = "10") int size) {
         return service.findAll(PageRequest.of(page, size));
     }
