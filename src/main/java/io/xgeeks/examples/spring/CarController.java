@@ -1,5 +1,6 @@
 package io.xgeeks.examples.spring;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,9 +30,9 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarDTO> findAll(@RequestParam(value = "page", defaultValue = "1") Long page,
-                                @RequestParam(value = "size", defaultValue = "10") Long size) {
-        return service.findAll(Page.of(page, size));
+    public List<CarDTO> findAll(@RequestParam(value = "page", defaultValue = "1") int page,
+                                @RequestParam(value = "size", defaultValue = "10") int size) {
+        return service.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("{id}")
