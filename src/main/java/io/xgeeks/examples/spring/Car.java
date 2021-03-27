@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -72,16 +70,6 @@ public class Car {
         }
         Car car = (Car) o;
         return Objects.equals(id, car.id);
-    }
-
-    public Map<String, Object> toMap() {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", this.id);
-        parameters.put("name", this.name);
-        parameters.put("city", this.city);
-        parameters.put("model", this.model);
-        parameters.put("color", this.color);
-        return parameters;
     }
 
     public void update(Car car) {
