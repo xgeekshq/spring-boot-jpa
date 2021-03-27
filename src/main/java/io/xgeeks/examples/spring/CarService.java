@@ -1,50 +1,54 @@
 package io.xgeeks.examples.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CarService {
 
-    private final CarDAO dao;
+    private final CarRepository repository;
 
     private final CarMapper mapper;
 
     @Autowired
-    public CarService(CarDAO dao, CarMapper mapper) {
-        this.dao = dao;
+    public CarService(CarRepository repository, CarMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
-    public List<CarDTO> findAll(Page page) {
-        Stream<Car> stream = dao.findAll(page);
+    public List<CarDTO> findAll(Pageable page) {
+        Stream<Car> stream = StreamSupport
+                .stream(repository.findAll(page)
+                        .spliterator(), false);
         return stream.map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public Optional<CarDTO> findById(Long id) {
-        return dao.findBy(id).map(mapper::toDTO);
+        return repository.findById(id).map(mapper::toDTO);
     }
 
     public CarDTO insert(CarDTO dto) {
         Car car = mapper.toEntity(dto);
-        return mapper.toDTO(dao.insert(car));
+        return mapper.toDTO(repository.save(car));
     }
 
     public CarDTO update(Long id, CarDTO dto) {
-        Car car = dao.findBy(id)
+        Car car = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Car does not find with the id " + id));
         car.update(mapper.toEntity(dto));
-        dao.update(car);
+        repository.save(car);
         return mapper.toDTO(car);
     }
 
     public void delete(Long id) {
-        dao.delete(id);
+        repository.deleteById(id);
     }
 }
