@@ -1,26 +1,34 @@
 package io.xgeeks.examples.spring;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Entity
 public class Car {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-
+    @Column
     private String name;
-
+    @Column
     private String city;
-
+    @Column
     private String model;
-
+    @Column
     private String color;
 
     /**
      * @Deprecated use the {@link Car#builder()} instead.
      */
     @Deprecated
-    Car() {
+    public Car() {
     }
 
     Car(Long id, String name,
@@ -32,6 +40,7 @@ public class Car {
         this.model = model;
         this.color = color;
     }
+
 
     public Long getId() {
         return id;
