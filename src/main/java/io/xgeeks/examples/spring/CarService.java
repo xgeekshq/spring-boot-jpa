@@ -24,6 +24,7 @@ public class CarService {
     }
 
     public List<CarDTO> findAll(Pageable page) {
+
         Stream<Car> stream = StreamSupport
                 .stream(repository.findAll(page)
                         .spliterator(), false);
