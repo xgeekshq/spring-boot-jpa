@@ -94,13 +94,15 @@ class CarRepositoryTest {
                     .build();
             cars.add(repository.save(car));
         }
-        Pageable page = PageRequest.of(1, 2);
+        Pageable page = PageRequest.of(0, 2);
         List<Car> result = StreamSupport.stream(repository.findAll(page).spliterator(), false)
                 .collect(Collectors.toList());
         Assertions.assertEquals(2, result.size());
+        MatcherAssert.assertThat(result, Matchers.contains(cars.get(0), cars.get(1)));
         Pageable nextPage = page.next();
         result = StreamSupport.stream(repository.findAll(nextPage).spliterator(), false)
                 .collect(Collectors.toList());
         Assertions.assertEquals(2, result.size());
+        MatcherAssert.assertThat(result, Matchers.contains(cars.get(2), cars.get(3)));
     }
 }
