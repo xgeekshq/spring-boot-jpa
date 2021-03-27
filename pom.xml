@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>io.xgeeks.examples</groupId>
-    <artifactId>spring-jdbc-template</artifactId>
+    <artifactId>spring-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-jdbc-template</name>
-    <description>Demo project for Spring Boot with JDBC Template</description>
+    <name>spring-jpa</name>
+    <description>Demo project for Spring Boot with Spring Data JPA</description>
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
